@@ -34,6 +34,9 @@
 #include <stdint.h>
 
 #include "printf.h"
+// Custom putch and _putch implementations
+// for writing directly into UART
+#include "../utils/uart.h"
 
 
 // define this globally (e.g. gcc -DPRINTF_INCLUDE_CONFIG_H ...) to include the
@@ -668,7 +671,7 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
         break;
 #endif
       case 'j' :
-        flags |= (sizeof(intmax_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
+        flags |= (sizeof(uintmax_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
         format++;
         break;
       case 'z' :
@@ -823,13 +826,13 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
         width = sizeof(void*) * 2U;
         flags |= FLAGS_ZEROPAD | FLAGS_UPPERCASE;
 #if defined(PRINTF_SUPPORT_LONG_LONG)
-        const bool is_ll = sizeof(uintptr_t) == sizeof(long long);
+        const bool is_ll = sizeof(uintmax_t) == sizeof(long long);
         if (is_ll) {
-          idx = _ntoa_long_long(out, buffer, idx, maxlen, (uintptr_t)va_arg(va, void*), false, 16U, precision, width, flags);
+          idx = _ntoa_long_long(out, buffer, idx, maxlen, (uintmax_t)va_arg(va, void*), false, 16U, precision, width, flags);
         }
         else {
 #endif
-          idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned long)((uintptr_t)va_arg(va, void*)), false, 16U, precision, width, flags);
+          idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned long)((uintmax_t)va_arg(va, void*)), false, 16U, precision, width, flags);
 #if defined(PRINTF_SUPPORT_LONG_LONG)
         }
 #endif
@@ -908,7 +911,7 @@ int fctprintf(void (*out)(char character, void* arg), void* arg, const char* for
   va_list va;
   va_start(va, format);
   const out_fct_wrap_type out_fct_wrap = { out, arg };
-  const int ret = _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
+  const int ret = _vsnprintf(_out_fct, (char*)(uintmax_t)&out_fct_wrap, (size_t)-1, format, va);
   va_end(va);
   return ret;
 }
