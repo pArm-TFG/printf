@@ -38,7 +38,6 @@
 // for writing directly into UART
 #include "../utils/uart.h"
 
-
 // define this globally (e.g. gcc -DPRINTF_INCLUDE_CONFIG_H ...) to include the
 // printf_config.h header file
 // default: undefined
@@ -130,6 +129,16 @@ typedef struct {
   void  (*fct)(char character, void* arg);
   void* arg;
 } out_fct_wrap_type;
+
+
+/**
+ * Output a character to a custom device like UART, used by the printf() function
+ * This function is declared here only. You have to write your custom implementation somewhere
+ * \param character Character to output
+ */
+inline void _putchar(char character) {
+    putch(character);
+}
 
 
 // internal buffer output
