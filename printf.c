@@ -131,16 +131,6 @@ typedef struct {
 } out_fct_wrap_type;
 
 
-/**
- * Output a character to a custom device like UART, used by the printf() function
- * This function is declared here only. You have to write your custom implementation somewhere
- * \param character Character to output
- */
-inline void _putchar(char character) {
-    putch(character);
-}
-
-
 // internal buffer output
 static inline void _out_buffer(char character, void* buffer, size_t idx, size_t maxlen)
 {
