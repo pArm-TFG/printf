@@ -71,7 +71,7 @@
 /**
  * Define this to disable long long (%ll) support
  */
-#define PRINTF_DISABLE_SUPPORT_LONG_LONG
+//#define PRINTF_DISABLE_SUPPORT_LONG_LONG
 
 /**
  * Define this to disable ptrdiff_t (%t) support
