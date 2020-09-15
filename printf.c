@@ -34,9 +34,6 @@
 #include <stdint.h>
 
 #include "printf.h"
-// Custom putch and _putch implementations
-// for writing directly into UART
-#include "../utils/uart.h"
 
 // define this globally (e.g. gcc -DPRINTF_INCLUDE_CONFIG_H ...) to include the
 // printf_config.h header file
