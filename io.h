@@ -29,6 +29,11 @@
 #ifndef IO_H
 #define	IO_H
 
+/**
+ * This is a simple wrapper for switching between custom printf implementation
+ * and stdio.h one, alongside with all the other tools included in both
+ * packages
+ */
 #ifdef USE_CUSTOM_PRINTF
 #include "printf.h"
 #else
